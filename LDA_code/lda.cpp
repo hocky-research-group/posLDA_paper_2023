@@ -200,18 +200,20 @@ void lda_proj::readinputs()
 
 }
 
+
+
 double lda_proj::determinant(int n, double *B)
 {
-
+   	
    double A[n][n]={0};
    // make a copy first!
    for(int i=0; i<n; ++i){
-           for(int j=0; j<n; ++j){A[i][j] = B[i * n + j];}
+	   for(int j=0; j<n; ++j){A[i][j] = B[i * n + j];}
    }
-
+   
 
    //const double SMALL = 1.0E-30;
-
+   
    //  It calculates determinant of a matrix using partial pivoting.
 
    double det = 1;
@@ -253,7 +255,6 @@ double lda_proj::determinant(int n, double *B)
 
    return det;
 }
-
 
 // kabsch rotation 
 //double lda_proj::kabsch_rot_mat() {
@@ -318,8 +319,8 @@ void lda_proj::kabsch_rot_mat() {
 
 
   // calculate determinants
-  double det_u = determinant(nrows, U_);
-  double det_vt = determinant(ncols, VT_);
+  double det_u = determinant(nrows, &U_[0][0]);
+  double det_vt = determinant(ncols, &VT_[0][0]);
 
   // check!
   if (det_u * det_vt < 0.0){ for(int i=0; i<nrows; ++i){U_[i][nrows-1] *= -1;} }
