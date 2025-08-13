@@ -65,7 +65,7 @@ private:
 public:
   static void registerKeywords( Keywords& keys );
   explicit lda_proj(const ActionOptions&);
-  double determinant(int n, double B[n][n]);
+  double determinant(int n, double *B);
   void kabsch_rot_mat();   		// gives rotation matrix
   double cal_lda_proj();    		// calculates the lda projection
   //void grad_lda(double);        	// calculates the gradient  
@@ -200,20 +200,18 @@ void lda_proj::readinputs()
 
 }
 
-
-
-double lda_proj::determinant(int n, double B[n][n])
+double lda_proj::determinant(int n, double *B)
 {
-   	
+
    double A[n][n]={0};
    // make a copy first!
    for(int i=0; i<n; ++i){
-	   for(int j=0; j<n; ++j){A[i][j] = B[i][j];}
+           for(int j=0; j<n; ++j){A[i][j] = B[i * n + j];}
    }
-   
+
 
    //const double SMALL = 1.0E-30;
-   
+
    //  It calculates determinant of a matrix using partial pivoting.
 
    double det = 1;
@@ -255,6 +253,7 @@ double lda_proj::determinant(int n, double B[n][n])
 
    return det;
 }
+
 
 // kabsch rotation 
 //double lda_proj::kabsch_rot_mat() {
